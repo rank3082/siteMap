@@ -1,11 +1,3 @@
-class SiteMapResponse {
-    constructor(data, error, code) {
-        this.data = data
-        this.error = error
-        this.code = code
-    }
-}
-
 class SiteMap {
     constructor(pageUrl, urls) {
         this.pageUrl = pageUrl
@@ -31,6 +23,5 @@ class SiteMap {
 }
 
 module.exports = {
-    SiteMapResponse,
     SiteMap
 }

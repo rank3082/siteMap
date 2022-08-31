@@ -1,6 +1,6 @@
 const axios = require("axios");
 const HttpStatus = require("http-status-codes");
-const {SiteMapResponse, SiteMap} = require("../models/siteMap.model");
+const {SiteMap} = require("../models/siteMap.model");
 const extractUrls = require("extract-urls");
 
 function getPageUrls(pageUrl, callback) {
@@ -19,13 +19,13 @@ function getPageUrls(pageUrl, callback) {
 function fetchPageSource(pageUrl, callback) {
     axios.get(pageUrl)
         .then(response => {
-            callback(new SiteMapResponse(response.data, null, response.status))
+            callback({data: response.data, error: null, code: response.status})
         }).catch(error => {
         if(error.response) {
-            callback(new SiteMapResponse(null, `request to url ${pageUrl} failed with status code ${error.response.status}`, error.response.status))
+            callback({data: null, error: `request to url ${pageUrl} failed with status code ${error.response.status}`, code: error.response.status})
             return
         }
-        callback(new SiteMapResponse(null, `response from url ${pageUrl} did not received`, HttpStatus.INTERNAL_SERVER_ERROR))
+        callback({data: null, error: `response from url ${pageUrl} did not received`, code: HttpStatus.INTERNAL_SERVER_ERROR})
     });
 }
 
